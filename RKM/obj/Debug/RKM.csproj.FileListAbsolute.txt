@@ -1,0 +1,10 @@
+C:\Users\dablyazov\source\repos\RKM\RKM\bin\Debug\RKM.exe.config
+C:\Users\dablyazov\source\repos\RKM\RKM\bin\Debug\RKM.exe
+C:\Users\dablyazov\source\repos\RKM\RKM\bin\Debug\RKM.pdb
+C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.csprojAssemblyReference.cache
+C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.Form1.resources
+C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.Properties.Resources.resources
+C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.csproj.GenerateResource.cache
+C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.csproj.CoreCompileInputs.cache
+C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.exe
+C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.pdb
