@@ -8,3 +8,13 @@ C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.csproj.GenerateResource.ca
 C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.csproj.CoreCompileInputs.cache
 C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.exe
 C:\Users\dablyazov\source\repos\RKM\RKM\obj\Debug\RKM.pdb
+D:\MyProjects\RKM\RKM\bin\Debug\RKM.exe.config
+D:\MyProjects\RKM\RKM\bin\Debug\RKM.exe
+D:\MyProjects\RKM\RKM\bin\Debug\RKM.pdb
+D:\MyProjects\RKM\RKM\obj\Debug\RKM.csprojAssemblyReference.cache
+D:\MyProjects\RKM\RKM\obj\Debug\RKM.Form1.resources
+D:\MyProjects\RKM\RKM\obj\Debug\RKM.Properties.Resources.resources
+D:\MyProjects\RKM\RKM\obj\Debug\RKM.csproj.GenerateResource.cache
+D:\MyProjects\RKM\RKM\obj\Debug\RKM.csproj.CoreCompileInputs.cache
+D:\MyProjects\RKM\RKM\obj\Debug\RKM.exe
+D:\MyProjects\RKM\RKM\obj\Debug\RKM.pdb
