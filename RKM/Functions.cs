@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RKM
 {
-    struct Step
+    public struct Step
     {
         public double x;
         public double u;
@@ -16,7 +16,7 @@ namespace RKM
         public double k4;
     }
 
-    struct StepSystem
+    public struct StepSystem
     {
         public double x;
         public double u;
@@ -63,9 +63,9 @@ namespace RKM
 
 
 
-        public static void RKMdecision(double left, double rigth, double Nmax, double U0, double h, double a, double b, double c)
+        public static Step[] RKMdecision(double left, double right, double Nmax, double U0, double h, double a, double b, double c)
         {
-            double n = (rigth - left) / h;
+            double n = (right - left) / h;
             n = n > Nmax ? Nmax : n;
 
             Step[] steps = new Step[(int)n + 1];
@@ -83,21 +83,12 @@ namespace RKM
                 steps[i].u = steps[i - 1].u + (steps[i].k1 + 2 * steps[i].k2 + 2 * steps[i].k3 + steps[i].k4) / 6;
             }
 
-            for (int i = 0; i <= n; i++)
-            {
-                Console.WriteLine(i + " " + "X" + steps[i].x);
-            }
-
-            for (int i = 0; i <= n; i++)
-            {
-                Console.WriteLine(i + " " + "U" + steps[i].u);
-            }
-
+            return steps;
         }
 
-        public static void RKMdecisionForSystem(double left, double rigth, double Nmax, double U0, double z0, double h, double a, double b, double c)
+        public static void RKMdecisionForSystem(double left, double right, double Nmax, double U0, double z0, double h, double a, double b, double c)
         {
-            double n = (rigth - left) / h;
+            double n = (right - left) / h;
             n = n > Nmax ? Nmax : n;
 
             StepSystem[] steps = new StepSystem[(int)n + 1];

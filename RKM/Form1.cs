@@ -116,6 +116,7 @@ namespace RKM
         {
             double left, right, Nmax, U0, h, a, b, c, z;
 
+
             if (textBoxLeft.Text != "")
                 left = Convert.ToDouble(textBoxLeft.Text);
             else left = 0;
@@ -144,7 +145,16 @@ namespace RKM
                 z = Convert.ToDouble(textBoxZ.Text);
             else z = 0;
 
-            Functions.RKMdecision(left, right, Nmax, U0, h, a, b, c);
+            double n = (right - left) / h;
+            n = n > Nmax ? Nmax : n;
+            Step[] allSteps = new Step[(int)n + 1];
+
+
+            allSteps = Functions.RKMdecision(left, right, Nmax, U0, h, a, b, c);
+
+            OutputForm output = new OutputForm(allSteps);
+            output.Show();
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
