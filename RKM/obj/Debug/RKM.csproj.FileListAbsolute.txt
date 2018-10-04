@@ -28,3 +28,4 @@ C:\projects\RKM\RKM\obj\Debug\RKM.Form1.resources
 C:\projects\RKM\RKM\obj\Debug\RKM.OutputForm.resources
 C:\projects\RKM\RKM\obj\Debug\RKM.Properties.Resources.resources
 C:\projects\RKM\RKM\obj\Debug\RKM.csproj.GenerateResource.Cache
+C:\projects\RKM\RKM\obj\Debug\RKM.csprojResolveAssemblyReference.cache
