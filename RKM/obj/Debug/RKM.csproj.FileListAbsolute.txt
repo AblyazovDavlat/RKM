@@ -19,3 +19,12 @@ D:\MyProjects\RKM\RKM\obj\Debug\RKM.csproj.CoreCompileInputs.cache
 D:\MyProjects\RKM\RKM\obj\Debug\RKM.exe
 D:\MyProjects\RKM\RKM\obj\Debug\RKM.pdb
 D:\MyProjects\RKM\RKM\obj\Debug\RKM.OutputForm.resources
+C:\projects\RKM\RKM\bin\Debug\RKM.exe.config
+C:\projects\RKM\RKM\obj\Debug\RKM.exe
+C:\projects\RKM\RKM\obj\Debug\RKM.pdb
+C:\projects\RKM\RKM\bin\Debug\RKM.exe
+C:\projects\RKM\RKM\bin\Debug\RKM.pdb
+C:\projects\RKM\RKM\obj\Debug\RKM.Form1.resources
+C:\projects\RKM\RKM\obj\Debug\RKM.OutputForm.resources
+C:\projects\RKM\RKM\obj\Debug\RKM.Properties.Resources.resources
+C:\projects\RKM\RKM\obj\Debug\RKM.csproj.GenerateResource.Cache

@@ -39,10 +39,10 @@ namespace RKM
             return 2 * u;
         }
 
-        public static double FirstMainFunction(double x, double u)
+        /*public static double FirstMainFunction(double x, double u)
         {
             return ((Math.Pow(x, 3) + 1) / (Math.Pow(x, 5) + 1) * Math.Pow(u, 2) + u - Math.Pow(u, 3) * Math.Sin(10 * x));
-        }
+        }*/
 
         public static double SystemFunction1(double z)
         {
@@ -56,7 +56,7 @@ namespace RKM
 
 
 
-        public static double OtherMainFunction(double x, double u)
+        public static double FirstMainFunction(double x, double u)
         {
             return 3 * Math.Sin(2 * u) + x;
         }
