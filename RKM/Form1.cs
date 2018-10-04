@@ -114,7 +114,7 @@ namespace RKM
 
         private void button1_Click(object sender, EventArgs e)
         {
-            double left, right, Nmax, U0, h, a, b, c, z;
+            double left, right, Nmax, U0, h, a, b, c, z, E;
 
 
             if (textBoxLeft.Text != "")
@@ -144,15 +144,20 @@ namespace RKM
             if (textBoxZ.Text != "")
                 z = Convert.ToDouble(textBoxZ.Text);
             else z = 0;
+            if (textBoxE.Text != "")
+                E = Convert.ToDouble(textBoxE.Text);
+            else E = 0.0001;
 
             double n = (right - left) / h;
             n = n > Nmax ? Nmax : n;
             Step[] allSteps = new Step[(int)n + 1];
+            Step[] allSteps2 = new Step[(int)n + 1];
 
 
-            allSteps = Functions.RKMdecision(left, right, Nmax, U0, h, a, b, c);
+            allSteps = Functions.RKMdecision(left, right, Nmax, U0, h, a, b, c, E).Item1;
+            allSteps2 = Functions.RKMdecision(left, right, Nmax, U0, h, a, b, c, E).Item2;
 
-            OutputForm output = new OutputForm(allSteps);
+            OutputForm output = new OutputForm(allSteps , allSteps2);
             output.Show();
             
         }

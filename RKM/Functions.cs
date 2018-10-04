@@ -14,6 +14,10 @@ namespace RKM
         public double k2;
         public double k3;
         public double k4;
+        public double E;
+        public double OLP;
+        public int C1;
+        public int C2;
     }
 
     public struct StepSystem
@@ -39,10 +43,10 @@ namespace RKM
             return 2 * u;
         }
 
-        public static double FirstMainFunction(double x, double u)
+        /*public static double FirstMainFunction(double x, double u)
         {
             return ((Math.Pow(x, 3) + 1) / (Math.Pow(x, 5) + 1) * Math.Pow(u, 2) + u - Math.Pow(u, 3) * Math.Sin(10 * x));
-        }
+        }*/
 
         public static double SystemFunction1(double z)
         {
@@ -56,34 +60,134 @@ namespace RKM
 
 
 
-        public static double OtherMainFunction(double x, double u)
+        public static double FirstMainFunction(double x, double u)
         {
             return 3 * Math.Sin(2 * u) + x;
         }
 
 
 
-        public static Step[] RKMdecision(double left, double right, double Nmax, double U0, double h, double a, double b, double c)
+        public static Tuple<Step[], Step[]> RKMdecision(double left, double right, double Nmax, double U0, double h, double a, double b, double c, double E)
         {
-            double n = (right - left) / h;
-            n = n > Nmax ? Nmax : n;
+            int p = 2;
 
-            Step[] steps = new Step[(int)n + 1];
+            double newE = E / Math.Pow(2, p + 1);
+
+            double n = Nmax;
+            
+            double h2 = h / 2;
+
+            Step[] steps = new Step[(int)Nmax + 1];
+            Step[] steps2 = new Step[(int)Nmax + 1];
 
             steps[0].x = left;
             steps[0].u = U0;
+            steps[0].E = E;
 
-            for (int i = 1; i <= n; i++)
+            steps2[0].x = left;
+            steps2[0].u = U0;
+            steps2[0].E = E;
+
+            if (E == 0)
             {
-                steps[i].x = left + i * h;
-                steps[i].k1 = h * FirstMainFunction(steps[i - 1].x, steps[i - 1].u);
-                steps[i].k2 = h * FirstMainFunction(steps[i - 1].x + h / 2.0, steps[i - 1].u + steps[i].k1 / 2.0);
-                steps[i].k3 = h * FirstMainFunction(steps[i - 1].x + h / 2, steps[i - 1].u + steps[i].k2 / 2);
-                steps[i].k4 = h * FirstMainFunction(steps[i - 1].x + h, steps[i - 1].u + steps[i].k3);
-                steps[i].u = steps[i - 1].u + (steps[i].k1 + 2 * steps[i].k2 + 2 * steps[i].k3 + steps[i].k4) / 6;
+                n = (right - left) / h;
+                n = n > Nmax ? Nmax : n;
+
+                for (int i = 1; i <= n; i++)
+                {
+                    steps[i].x = left + i * h;
+                    steps[i].k1 = h * FirstMainFunction(steps[i - 1].x, steps[i - 1].u);
+                    steps[i].k2 = h * FirstMainFunction(steps[i - 1].x + h / 2.0, steps[i - 1].u + steps[i].k1 / 2.0);
+                    steps[i].k3 = h * FirstMainFunction(steps[i - 1].x + h / 2, steps[i - 1].u + steps[i].k2 / 2);
+                    steps[i].k4 = h * FirstMainFunction(steps[i - 1].x + h, steps[i - 1].u + steps[i].k3);
+                    steps[i].u = steps[i - 1].u + (steps[i].k1 + 2 * steps[i].k2 + 2 * steps[i].k3 + steps[i].k4) / 6;
+                    steps[i].E = E;
+                }
+
+                h = h / 2;
+                steps2[0].x = left;
+                steps2[0].u = U0;
+                steps2[0].E = E;
+
+                for (int i = 1; i <= n; i++)
+                {
+                    steps2[i].x = left + i * h;
+                    steps2[i].k1 = h * FirstMainFunction(steps2[i - 1].x, steps2[i - 1].u);
+                    steps2[i].k2 = h * FirstMainFunction(steps2[i - 1].x + h / 2.0, steps2[i - 1].u + steps2[i].k1 / 2.0);
+                    steps2[i].k3 = h * FirstMainFunction(steps2[i - 1].x + h / 2, steps2[i - 1].u + steps2[i].k2 / 2);
+                    steps2[i].k4 = h * FirstMainFunction(steps2[i - 1].x + h, steps2[i - 1].u + steps2[i].k3);
+                    steps2[i].u = steps2[i - 1].u + (steps2[i].k1 + 2 * steps2[i].k2 + 2 * steps2[i].k3 + steps2[i].k4) / 6;
+                    steps2[i].E = E;
+                }
+                for (int i = 0; i <= n; i++)
+                {
+                    steps[i].OLP = (steps2[i].u - steps[i].u) / (Math.Pow(2, p) - 1);
+                }
+            }
+            else
+            {
+                steps[0].OLP = Math.Abs((steps2[0].u - steps[0].u) / (Math.Pow(2, p) - 1));
+                int i = 1;
+                double olpTMP = steps[0].OLP;
+                steps[0].C1 = 0;
+                steps[0].C2 = 0;
+                while (true) {
+                    if (olpTMP  > E && i < Nmax)
+                    {
+                        steps[0].C1 = steps[0].C1 + 1;
+                        h = h / 2;
+                        steps[i].x = left + i * h;
+                        steps[i].k1 = h * FirstMainFunction(steps[i - 1].x, steps[i - 1].u);
+                        steps[i].k2 = h * FirstMainFunction(steps[i - 1].x + h / 2.0, steps[i - 1].u + steps[i].k1 / 2.0);
+                        steps[i].k3 = h * FirstMainFunction(steps[i - 1].x + h / 2, steps[i - 1].u + steps[i].k2 / 2);
+                        steps[i].k4 = h * FirstMainFunction(steps[i - 1].x + h, steps[i - 1].u + steps[i].k3);
+                        steps[i].u = steps[i - 1].u + (steps[i].k1 + 2 * steps[i].k2 + 2 * steps[i].k3 + steps[i].k4) / 6;
+                        steps[i].E = E;
+
+                        h2 = h2 / 2;
+                        steps2[i].x = left + i * h2;
+                        steps2[i].k1 = h2 * FirstMainFunction(steps2[i - 1].x, steps2[i - 1].u);
+                        steps2[i].k2 = h2 * FirstMainFunction(steps2[i - 1].x + h2 / 2.0, steps2[i - 1].u + steps2[i].k1 / 2.0);
+                        steps2[i].k3 = h2 * FirstMainFunction(steps2[i - 1].x + h2 / 2, steps2[i - 1].u + steps2[i].k2 / 2);
+                        steps2[i].k4 = h2 * FirstMainFunction(steps2[i - 1].x + h2, steps2[i - 1].u + steps2[i].k3);
+                        steps2[i].u = steps2[i - 1].u + (steps2[i].k1 + 2 * steps2[i].k2 + 2 * steps2[i].k3 + steps2[i].k4) / 6;
+                        steps2[i].E = E;
+
+                        steps[i].OLP = Math.Abs((steps2[i].u - steps[i].u) / (Math.Pow(2, p) - 1));
+                        olpTMP = steps[i].OLP;
+                    }
+                    if (steps[i].OLP < newE && i < Nmax)
+                    {
+                        steps[0].C2 = steps[0].C2 + 1;
+                        h = h * 2;
+                        steps[i].x = left + i * h;
+                        steps[i].k1 = h * FirstMainFunction(steps[i - 1].x, steps[i - 1].u);
+                        steps[i].k2 = h * FirstMainFunction(steps[i - 1].x + h / 2.0, steps[i - 1].u + steps[i].k1 / 2.0);
+                        steps[i].k3 = h * FirstMainFunction(steps[i - 1].x + h / 2, steps[i - 1].u + steps[i].k2 / 2);
+                        steps[i].k4 = h * FirstMainFunction(steps[i - 1].x + h, steps[i - 1].u + steps[i].k3);
+                        steps[i].u = steps[i - 1].u + (steps[i].k1 + 2 * steps[i].k2 + 2 * steps[i].k3 + steps[i].k4) / 6;
+                        steps[i].E = E;
+
+                        h2 = h2 * 2;
+                        steps2[i].x = left + i * h2;
+                        steps2[i].k1 = h2 * FirstMainFunction(steps2[i - 1].x, steps2[i - 1].u);
+                        steps2[i].k2 = h2 * FirstMainFunction(steps2[i - 1].x + h2 / 2.0, steps2[i - 1].u + steps2[i].k1 / 2.0);
+                        steps2[i].k3 = h2 * FirstMainFunction(steps2[i - 1].x + h2 / 2, steps2[i - 1].u + steps2[i].k2 / 2);
+                        steps2[i].k4 = h2 * FirstMainFunction(steps2[i - 1].x + h2, steps2[i - 1].u + steps2[i].k3);
+                        steps2[i].u = steps2[i - 1].u + (steps2[i].k1 + 2 * steps2[i].k2 + 2 * steps2[i].k3 + steps2[i].k4) / 6;
+                        steps2[i].E = E;
+
+
+                        steps[i].OLP = Math.Abs((steps2[i].u - steps[i].u) / (Math.Pow(2, p) - 1));
+                        olpTMP = steps[i].OLP;
+                    }
+                    else break;
+
+                    i++;
+                }
             }
 
-            return steps;
+            return new Tuple <Step[], Step[]> (steps, steps2);
         }
 
         public static void RKMdecisionForSystem(double left, double right, double Nmax, double U0, double z0, double h, double a, double b, double c)
